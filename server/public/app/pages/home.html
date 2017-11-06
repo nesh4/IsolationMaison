@@ -1,0 +1,247 @@
+<div layout="row" layout-margin style="background-image: url(assets/img/img-back.jpg);">
+
+    <div layout="column" layout-align="center center">
+
+        <!-- FORMULAIRE-->
+        <form name="testEligibilite" style="background-color: rgb(229, 229, 229); opacity: 0.95; margin-top:20px; padding:15px 20px 15px 20px;width:900px;border-radius: 70;">
+            <div layout="column">
+                <md-input-container>
+                    <!-- MAISON OU APPARTEMENT-->
+                    <div flex layout="row" layout-align="space-between center">
+                        <h4 style="color: rgba(255,82,82,0.87);margin-left: 50px; font-weight:600" layout-align="center center">
+                            Type d'habitation:
+                        </h4>
+                        <md-radio-group name="type" ng-model="form.maisonType" ng-change="changeType()" required>
+                            <div layout="row" layout-align="center center" style="margin-right: 300px;margin-top: 20px">
+                                <md-radio-button style="margin-right: 15px;color:black" value="appartement">
+
+                                    Appartement
+
+                                </md-radio-button>
+
+                                <md-radio-button style="margin-right: 15px;color:black" value="maison">
+
+                                    Maison
+
+                                </md-radio-button>
+                            </div>
+                        </md-radio-group>
+                    </div>
+                    <div class="md-input-message-animation ng-scope" ng-show="error.typeError" style="margin-top: 0px;opacity: 1;margin-left: 50px;position: absolute;">
+                        Veuillez choisir un type d'habitation
+                    </div>
+                </md-input-container>
+                <!--QUE SOUHAITEZ VOUS ISOLEZ-->
+                <div layout="column" style="margin: 25px 50 0px 50;">
+                    <h4 layout-align="center center" style="color: rgba(255,82,82,0.87);font-weight:600"> Que souhaitez-vous isoler ? </h4>
+                    <!--Div of picture  -->
+                    <div layout="row" layout-align="space-between center">
+                        <div layout="column">
+                            COMBLES
+                            <md-input-container class="md-icon-float md-icon-right md-block">
+                                <label>Mètre carré</label>
+                                <input ng-model="form.comble" type="number" min="0">
+                            </md-input-container>
+                        </div>
+                        <div layout="column">
+                            GARAGE
+                            <md-input-container class="md-icon-float md-icon-right md-block">
+                                <label>Mètre carré</label>
+                                <input ng-model="form.garage" type="number" min="0">
+                            </md-input-container>
+                        </div>
+                        <div layout="column">
+                            SOUS-SOLS
+                            <md-input-container class="md-icon-float md-icon-right md-block">
+                                <label>Mètre carré</label>
+                                <input ng-model="form.sousSols" type="number" min="0">
+                            </md-input-container>
+                        </div>
+                        <div layout="column">
+                            VIDE SANITAIRE
+                            <md-input-container class="md-icon-float md-icon-right md-block">
+                                <label>Mètre carré</label>
+                                <input ng-model="form.videSanitaire" type="number" min="0">
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <md-divider style="margin-top:-20px;
+    margin-bottom: 25px;
+"></md-divider>
+                </div>
+
+
+
+                <div layout="column" style="margin: 0px 10 10 35" layout-align="space-around">
+
+                    <!--MAISON INFO-->
+                    <div layout="row">
+                        <div layout="column" layout-align="space-between start">
+
+                            <!-- METHODE CHAUFFAGE-->
+                            <md-input-container class="input-field col s12" style="color: rgba(255,82,82,0.87);font-weight:600">
+                                Votre type de chauffage :
+                                <md-radio-group name="heat" ng-model="form.heatMethod" ng-required="!form.heatMethod" class="md-block" ng-change="changeHeat()">
+                                    <div layout="row" class="isol-form">
+                                        <md-radio-button style="
+    margin-right: 15px;color:black" ng-repeat="heat in radioHeatingMethod" value="{{heat.name}}">
+
+                                            {{heat.displayName}}
+
+                                        </md-radio-button>
+                                    </div>
+                                </md-radio-group>
+                                <div class="md-input-message-animation ng-scope" ng-show="error.heatError" style="margin-top: 0px;opacity: 1;position: absolute;">
+                                    Veuillez choisir une méthode de chauffage
+                                </div>
+                            </md-input-container>
+
+                            <!-- DEPARTMENT-->
+                            <md-input-container layout-align="space-around center">
+                                <div style="color: rgba(255,82,82,0.87);font-weight:600;margin-bottom: 10px"> Votre department: </div>
+                                <div>
+                                    <select name="departement" class="select" ng-model="form.department" ng-change="changeDep();changePersonCount(false)" style="display:inherit" required>
+                                              <option ng-repeat="dep in departmentList" ng-value="dep.value">
+                                                   {{dep.displayName}}
+                                              </option>
+                                    </select>
+                                </div>
+                                <div class="md-input-message-animation ng-scope" ng-show="error.departementError" style="margin-top: 0px;opacity: 1;position: absolute;">
+                                    Veuillez choisir un departement
+                                </div>
+                            </md-input-container>
+
+                            <!-- HABITANT MAISON-->
+                            <md-input-container style="color: rgba(255,82,82,0.87);font-weight:600">
+                                Nombre habitant logement :
+                                <md-radio-group name="count" ng-model="form.personInHome" ng-change="changePersonCount(true)" ng-required="!form.personInHome">
+                                    <div layout="row" class="isol-form">
+
+                                        <md-radio-button style="margin-right: 15px;color:black" ng-repeat="count in personInHome" value="{{count.value}}">
+
+                                            {{count.display}}
+
+                                        </md-radio-button>
+                                    </div>
+                                </md-radio-group>
+                                <div class="md-input-message-animation ng-scope" ng-show="error.countError" style="margin-top: 0px;opacity: 1;position: absolute;">
+                                    Veuillez choisir un nombre d'habitant du logement
+                                </div>
+                            </md-input-container>
+
+                            <!-- SALAIRE -->
+                            <md-input-container>
+                                <div layout-align="space-around center">
+                                    <div style="color: rgba(255,82,82,0.87);font-weight:600;margin-bottom: 10px">Votre revenu annuel:</div>
+                                    <div layout="row">
+                                        <select name="salaire" class="select" ng-model="form.salary" ng-change="changeSal()" ng-disabled="!form.personInHome || !form.department" style="display:inherit" required>
+                                              <option ng-repeat="i in salaryOptions" ng-value="i.value">
+                                                    {{i.label}}
+                                              </option>
+                                    </select>
+                                        <div id="panelPrecios">
+
+                                            <md-button data-toggle="tooltip" title="<img src='assets/img/rfr.png'></img> " class="md-raised" style="color:rgba(255,82,82,0.87)" ng-click="showAlert($event)">
+                                                ?
+                                            </md-button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="md-input-message-animation ng-scope" ng-show="error.salError" style="margin-top: 0px;opacity: 1;position: absolute;">
+                                    Veuillez choisir un revenu anuel
+                                </div>
+                            </md-input-container>
+
+                        </div>
+                    </div>
+
+
+                    <md-divider style="margin-top: 20px;"></md-divider>
+
+                    <!-- CONTACT INFO-->
+                    <div class="md-no-momentum">
+                        <md-input-container class="md-icon-float md-block">
+                            <!-- Use floating label instead of placeholder -->
+                            <md-icon md-svg-src="assets/img/person.svg" class="name"></md-icon>
+                            <input name="name" ng-model="form.name" type="text" placeholder="Nom et prénom" ng-required="true">
+                            <div ng-messages="testEligibilite.name.$error" role="alert">
+                                <div ng-message-exp="['required']">
+                                    Veuillez entrer votre nom et prénom
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <md-icon md-svg-src="assets/img/phone.svg"></md-icon>
+                            <input name="telephone" ng-model="form.telephone" type="text" placeholder="Numero de téléphone" ng-required="true" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/">
+                            <div ng-messages="testEligibilite.telephone.$error" role="alert">
+                                <div ng-message-exp="['required', 'pattern']">
+                                    ###-###-#### - Veuillez entrer un numéro de téléphone valide
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <!-- Use floating placeholder instead of label -->
+                            <md-icon md-svg-src="assets/img/email.svg" class="email"></md-icon>
+                            <input name="email" ng-model="form.email" type="email" placeholder="Email" ng-required="true" ng-pattern="/^.+@.+\..+$/">
+                            <div ng-messages="testEligibilite.email.$error" role="alert">
+                                <div ng-message-exp="['required', 'pattern']">
+                                    Veuillez entrer un email valide
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <md-icon md-svg-src="assets/img/place.svg"></md-icon>
+                            <input name="codePostal" ng-model="form.codePostal" type="number" placeholder="Code postal" required in="0" minlength="5" maxlength="5">
+                            <div ng-messages="testEligibilite.codePostal.$error" role="alert">
+                                <div ng-message-exp="['required', 'minlength', 'maxlength']">
+                                    Veuillez entrer un code postal valide
+                                </div>
+                            </div>
+
+                        </md-input-container>
+                    </div>
+
+                    <!--BOUTON-->
+                    <div layout="row" layout-align="center" style="margin-top:15">
+                        <a class="waves-effect waves-light btn-large" ng-click="onTestClick(testEligibilite)">Tester votre éligibilité</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- VIDEO YOUTUBE-->
+        <div flex="60" layout="row" layout-align="center stretch" layout-padding>
+            <div flex style="background-color: rgb(229, 229, 229);opacity: 0.85;border-radius: 70;margin-left:80px;margin-top:10px; padding:15px 20px 15px 30px;margin-bottom: 20px">
+                <h4 style="font-weight:500">Reportage vue sur :</h4>
+                <img ng-repeat="video in videoListUrl" src="{{video.imgUrl}}" ng-click="onVideoButtonClick(video.url)" style="margin-left: 10px">
+            </div>
+            <div flex>
+                <iframe width="80%" height="400" ng-src="{{videoUrl | trusted }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div style="background-color: rgb(229, 229, 229); opacity: 0.95;margin-left: -30;margin-top:30px;border-radius: 70;margin-right: 15px;width: 200px">
+
+        <div>
+            <img style="margin-left: 20;margin-right: 20; margin-top: 50;width: auto;height: 100" src="assets/img/tirelire.jpg" />
+            <p style="margin-left: 30;margin-right: 5">RÉDUISEZ VOS FACTURE D'ENERGIE</p>
+        </div>
+        <div>
+            <img style="margin-left: 20;margin-right: 20; margin-top: 50;width: auto;height: 100" src="assets/img/tirelire.jpg" />
+            <p style="margin-left: 30;margin-right: 5">AMÉLIOREZ VOTRE CONFORT DE VIE</p>
+        </div>
+        <div>
+            <img style="margin-left: 20;margin-right: 20; margin-top: 50;width: auto;height: 100" src="assets/img/tirelire.jpg" />
+            <p style="margin-left: 30;margin-right: 5">POSE EFFECTUÉE EN 1/2 JOURNÉE</p>
+        </div>
+    </div>
+</div>

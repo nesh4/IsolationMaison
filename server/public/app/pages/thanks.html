@@ -1,0 +1,43 @@
+<div style="background-image: url(assets/img/img-back.jpg);height:500">
+    <div layout="row" layout-padding layout-margin layout-fill style="min-height: 224px;">
+        <div flex style="background-color: rgb(229, 229, 229);opacity: 0.95; margin-top:20px; padding:15px 20px 15px 20px;width:900px;border-radius:70;margin-left: 100;margin-right: 100;">
+            <md-toolbar style="margin-top: 30;">
+                <div class="md-toolbar-tools" style="background-color: #2bbbad">
+                    <h1 class="md-flex" style="font-weight:600">FÉLICITATION !</h1>
+                </div>
+            </md-toolbar>
+            <md-content>
+                <p>{{form.message}}LE MESSAGE EN ACCORD AVEC L'ÉLIGIBILITÉ</p>
+            </md-content>
+
+            <div ng-show="typeEligibilite == 'oui'">
+                <md-input-container layout-align="space-around center">
+                    <div style="color: rgba(255,82,82,0.87);font-weight:600;margin-bottom: 10px"> Veuillez choisir une plage horraire a laquelle vous appelez </div>
+                    <div>
+                        <select name="departement" class="select" ng-model="form.horraire" style="display:inherit" required>
+                     <option ng-value="7-9">
+                                                   7 heures a 9 heures
+                    </option>
+                    <option ng-value="9-12">
+                                                   9 heures a 12 heures
+                    </option>
+                    <option ng-value="12-14">
+                                                   12 heures a 14 heures
+                    </option>
+                    <option ng-value="14-18">
+                                                   14 heures a 18 heures
+                    </option>
+                    <option ng-value="18-24">
+                                                   18 heures a 24 heures
+                    </option>
+                     </select>
+                    </div>
+                </md-input-container>
+
+                <div layout="row" layout-align="center" style="margin-top:15">
+                    <a class="waves-effect waves-light btn-large" ng-click="sendCoordonner()" ng-disabled="!form.horraire">Confirmer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+{
+	"gaz" : "Gaz naturel",
+    "elect": "Electricité ou pompe à chaleur",
+    "gpl": "GPL",
+    "fioul": "Fioul",
+    "bois": "Bois",
+    "autre": "Autre",
+}
